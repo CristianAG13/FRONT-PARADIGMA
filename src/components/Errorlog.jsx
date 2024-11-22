@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
 
 export const ErrorLog = () => {
-  const [errors, setErrors] = useState([]); // Estado para almacenar los errores
+  const [errrors, setErrors] = useState([]); // Estado para almacenar los errores
   const [filter, setFilter] = useState(''); // Estado para el filtro de errores
 
   // Estados para la paginación
@@ -15,6 +15,37 @@ export const ErrorLog = () => {
     return existingErrors.some((error) => error.id === newError.id);
   };
 
+  const fetchErrors = async (filterType) => {
+    try {
+      let endpoint = 'https://ptgzg54q-7209.use2.devtunnels.ms/api/ErrorLog';
+      if (filterType === 'controlled') {
+        endpoint = 'https://localhost:7209/api/ErrorLog/controlled'; 
+      }
+
+      const response = await fetch(endpoint);
+      if (!response.ok) {
+        throw new Error(`Error HTTP! status: ${response.status}`);
+      }
+      const fetchedErrors = await response.json();
+      console.log("Errores obtenidos de la API:", fetchedErrors);
+
+      setErrors(fetchedErrors);
+    } catch (error) {
+      console.error('Error cargando los errores:', error);
+    }
+  };
+
+  // Usar useEffect para obtener los errores cuando el filtro cambie
+  useEffect(() => {
+    fetchErrors(filter);
+  }, [filter]);
+
+  const filteredErrors = useMemo(() => {
+    if (filter === 'exception') {
+      return errors.filter((error) => error.retryCount === 3); 
+    }
+    return errors; // Mostrar todos si no hay filtro
+  }, [errors, filter]);
   // Obtener todos los errores al cargar la página
   /*useEffect(() => {
     const fetchAllErrors = async () => {
@@ -171,15 +202,15 @@ export const ErrorLog = () => {
 
                 return (
                   <li
-                    key={uniqueKey}
+                  key={uniqueKey}
                     className={`p-2 rounded-lg shadow flex items-start space-x-2 text-sm ${
-                      error.isRetriable === false
+                  error.retryCount === 3
                         ? 'bg-red-700 text-red-100'
                         : 'bg-green-700 text-green-100'
                     }`}
                   >
                     <div className="mt-0.5">
-                      {error.isRetriable === false ? (
+                    {error.retryCount === 3 ? ( 
                         <FaExclamationTriangle className="text-lg" />
                       ) : (
                         <FaInfoCircle className="text-lg" />
