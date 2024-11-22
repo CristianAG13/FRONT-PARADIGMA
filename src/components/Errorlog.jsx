@@ -15,8 +15,39 @@ export const ErrorLog = () => {
     return existingErrors.some((error) => error.id === newError.id);
   };
 
-  // Obtener todos los errores al cargar la página
+  const fetchErrors = async (filterType) => {
+    try {
+      let endpoint = 'https://ptgzg54q-7209.use2.devtunnels.ms/api/ErrorLog';
+      if (filterType === 'controlled') {
+        endpoint = 'https://localhost:7209/api/ErrorLog/controlled'; 
+      }
+
+      const response = await fetch(endpoint);
+      if (!response.ok) {
+        throw new Error(`Error HTTP! status: ${response.status}`);
+      }
+      const fetchedErrors = await response.json();
+      console.log("Errores obtenidos de la API:", fetchedErrors);
+
+      setErrors(fetchedErrors);
+    } catch (error) {
+      console.error('Error cargando los errores:', error);
+    }
+  };
+
+  // Usar useEffect para obtener los errores cuando el filtro cambie
   useEffect(() => {
+    fetchErrors(filter);
+  }, [filter]);
+
+  const filteredErrors = useMemo(() => {
+    if (filter === 'exception') {
+      return errors.filter((error) => error.retryCount === 3); 
+    }
+    return errors; // Mostrar todos si no hay filtro
+  }, [errors, filter]);
+  // Obtener todos los errores al cargar la página
+  /*useEffect(() => {
     const fetchAllErrors = async () => {
       try {
         const response = await fetch('https://pwxs1xbn-7209.use2.devtunnels.ms/api/ErrorLog');
@@ -39,7 +70,7 @@ export const ErrorLog = () => {
     };
 
     fetchAllErrors();
-  }, []);
+  }, []);*/
 
   // Conectar con EventSource al montar el componente
   useEffect(() => {
@@ -76,7 +107,7 @@ export const ErrorLog = () => {
   }, []);
 
   // Filtrar errores según el estado del filtro
-  const filteredErrors = useMemo(() => {
+ /* const filteredErrors = useMemo(() => {
     return errors.filter((error) => {
       if (filter === 'controlled') {
         return error.isRetriable === true;
@@ -85,7 +116,7 @@ export const ErrorLog = () => {
       }
       return true; // Mostrar todos si no hay filtro
     });
-  }, [errors, filter]);
+  }, [errors, filter]);*/
 
   // Calcular la paginación
   const totalErrors = filteredErrors.length;
@@ -159,6 +190,7 @@ export const ErrorLog = () => {
         </div>
       </div>
 
+
       {/* Lista de Errores */}
       <div className="bg-gray-800 rounded-lg shadow p-4">
         {currentErrors.length > 0 ? (
@@ -170,15 +202,15 @@ export const ErrorLog = () => {
 
                 return (
                   <li
-                    key={uniqueKey}
+                  key={uniqueKey}
                     className={`p-2 rounded-lg shadow flex items-start space-x-2 text-sm ${
-                      error.isRetriable === false
+                  error.retryCount === 3
                         ? 'bg-red-700 text-red-100'
                         : 'bg-green-700 text-green-100'
                     }`}
                   >
                     <div className="mt-0.5">
-                      {error.isRetriable === false ? (
+                    {error.retryCount === 3 ? ( 
                         <FaExclamationTriangle className="text-lg" />
                       ) : (
                         <FaInfoCircle className="text-lg" />
