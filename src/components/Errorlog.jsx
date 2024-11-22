@@ -16,7 +16,7 @@ export const ErrorLog = () => {
   };
 
   // Obtener todos los errores al cargar la página
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchAllErrors = async () => {
       try {
         const response = await fetch('https://ptgzg54q-7209.use2.devtunnels.ms/api/ErrorLog');
@@ -39,7 +39,7 @@ export const ErrorLog = () => {
     };
 
     fetchAllErrors();
-  }, []);
+  }, []);*/
 
   // Conectar con EventSource al montar el componente
   useEffect(() => {
@@ -76,7 +76,7 @@ export const ErrorLog = () => {
   }, []);
 
   // Filtrar errores según el estado del filtro
-  const filteredErrors = useMemo(() => {
+ /* const filteredErrors = useMemo(() => {
     return errors.filter((error) => {
       if (filter === 'controlled') {
         return error.isRetriable === true;
@@ -85,7 +85,7 @@ export const ErrorLog = () => {
       }
       return true; // Mostrar todos si no hay filtro
     });
-  }, [errors, filter]);
+  }, [errors, filter]);*/
 
   // Calcular la paginación
   const totalErrors = filteredErrors.length;
@@ -158,6 +158,7 @@ export const ErrorLog = () => {
           </select>
         </div>
       </div>
+
 
       {/* Lista de Errores */}
       <div className="bg-gray-800 rounded-lg shadow p-4">
