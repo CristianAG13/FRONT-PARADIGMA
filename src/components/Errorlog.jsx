@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { FaExclamationTriangle, FaInfoCircle } from 'react-icons/fa';
 
 export const ErrorLog = () => {
-  const [errrors, setErrors] = useState([]); // Estado para almacenar los errores
+  const [errors, setErrors] = useState([]); // Estado para almacenar los errores
   const [filter, setFilter] = useState(''); // Estado para el filtro de errores
 
   // Estados para la paginación
