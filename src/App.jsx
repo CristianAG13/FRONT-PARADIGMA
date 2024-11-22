@@ -1,9 +1,7 @@
 // src/App.jsx
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import ProtectedLayout from './layouts/ProtectedLayout';
-import Stats from './components/Stats';
 import ErrorLog from './components/Errorlog';
-import ErrorDashboard from './components/ErrorDashboard';
 import Login from './auth/components/Login';
 import ProtectedRoute from './auth/components/ProtectedRoute';
 import AuthRedirect from './auth/components/AuthRedirect'; // Importar el nuevo componente
