@@ -36,14 +36,14 @@ const Sidebar = () => {
             <FaExclamationTriangle />
             <span>Log de Errores</span>
           </Link>
-          <Link to="/dashboard" className="text-gray-100 hover:text-gray-300 flex items-center space-x-2">
+          {/* <Link to="/dashboard" className="text-gray-100 hover:text-gray-300 flex items-center space-x-2">
             <FaTachometerAlt />
             <span>Dashboard</span>
-          </Link>
-          <Link to="/stats" className="text-gray-100 hover:text-gray-300 flex items-center space-x-2">
+          </Link> */}
+          {/* <Link to="/stats" className="text-gray-100 hover:text-gray-300 flex items-center space-x-2">
             <FaChartBar />
             <span>Estadísticas</span>
-          </Link>
+          </Link> */}
         </nav>
 
         {/* Botón de Logout */}

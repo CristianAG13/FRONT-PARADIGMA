@@ -28,9 +28,9 @@ const App = () => {
           }
         >
           {/* Rutas hijas protegidas */}
-          <Route path="stats" element={<Stats />} />
+          {/* <Route path="stats" element={<Stats />} /> */}
           <Route path="error-log" element={<ErrorLog />} />
-          <Route path="dashboard" element={<ErrorDashboard />} />
+          {/* <Route path="dashboard" element={<ErrorDashboard />} /> */}
           {/* Redirección desde la ruta raíz a /stats */}
           <Route index element={<Navigate to="stats" replace />} />
           {/* Ruta wildcard dentro de ProtectedLayout */}

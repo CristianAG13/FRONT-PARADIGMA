@@ -19,7 +19,7 @@ export const ErrorLog = () => {
   useEffect(() => {
     const fetchAllErrors = async () => {
       try {
-        const response = await fetch('https://ptgzg54q-7209.use2.devtunnels.ms/api/ErrorLog');
+        const response = await fetch('https://pwxs1xbn-7209.use2.devtunnels.ms/api/ErrorLog');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -43,7 +43,7 @@ export const ErrorLog = () => {
 
   // Conectar con EventSource al montar el componente
   useEffect(() => {
-    const eventSource = new EventSource('https://ptgzg54q-7209.use2.devtunnels.ms/api/ErrorLog/stream');
+    const eventSource = new EventSource('https://pwxs1xbn-7209.use2.devtunnels.ms/api/ErrorLog/stream');
 
     // Al recibir un mensaje, agregar el error al estado
     eventSource.onmessage = (event) => {
